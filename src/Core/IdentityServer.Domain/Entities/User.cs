@@ -8,9 +8,9 @@ namespace IdentityServer.Domain.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime? IdentityNumber { get; set; }
-        public DateTime? CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; } = DateTime.Now;
         public DateTime? UpdatedDate { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool IsActive { get; set; } = true;
+        public bool IsDeleted { get; set; } = false;
     }
 }
