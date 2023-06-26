@@ -1,4 +1,6 @@
-﻿namespace IdentityServer.Application;
+﻿using IdentityServer.Application.Common.Extensions;
+
+namespace IdentityServer.Application;
 public static class ServiceCollectionExtensions
 {
     public static void AddApplicationLayer(this IServiceCollection services)
@@ -8,6 +10,7 @@ public static class ServiceCollectionExtensions
         services.AddAutoMapper();
         services.AddValidators();
         services.AddFilterAttributes();
+        services.AddExceptionHandling();
         services.AddHttpContextAccessor();
         services.AddLoggingPipelineBehaviours();
         services.AddValidationPipelineBehaviours();
@@ -18,6 +21,11 @@ public static class ServiceCollectionExtensions
     private static void AddServices(this IServiceCollection services)
     {
         services.AddScoped<ICurrentUserService, CurrentUserService>();
+    }
+
+    private static void AddExceptionHandling(this IServiceCollection services)
+    {
+        services.AddTransient<ExceptionHandlingMiddleware>();
     }
 
     private static void AddAutoMapper(this IServiceCollection services)
