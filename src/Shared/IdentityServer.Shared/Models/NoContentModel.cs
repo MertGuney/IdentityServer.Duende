@@ -1,6 +1,4 @@
-﻿namespace IdentityServer.Shared.Models
+﻿namespace IdentityServer.Shared.Models;
+public class NoContentModel
 {
-    public class NoContentModel
-    {
-    }
 }
