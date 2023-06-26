@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.2" />
+    <PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="6.3.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Core\IdentityServer.Application\IdentityServer.Application.csproj" />
   </ItemGroup>
 

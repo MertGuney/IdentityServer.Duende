@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Duende.IdentityServer" Version="6.3.2" />
+    <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Core\IdentityServer.Application\IdentityServer.Application.csproj" />
   </ItemGroup>
 

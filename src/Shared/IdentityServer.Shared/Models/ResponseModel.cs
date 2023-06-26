@@ -76,6 +76,15 @@
             };
             return new ResponseModel<T> { Errors = errors, StatusCode = statusCode, IsSuccessful = false };
         }
+        //TODO: Wrong error code
+        public static ResponseModel<T> UserNotFound()
+        {
+            List<ErrorModel> errors = new()
+            {
+                new ErrorModel(1,"Invalid user","User not found")
+            };
+            return new ResponseModel<T> { Errors = errors, StatusCode = 404, IsSuccessful = false };
+        }
         #endregion
 
         #region Async
