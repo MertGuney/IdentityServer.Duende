@@ -3,8 +3,13 @@
     public interface IAuthService
     {
         Task<bool> SendEmailConfirmationTokenAsync(User user);
+
+        Task<ResponseModel<NoContentModel>> ForgotPasswordAsync(string email);
+
         Task<ResponseModel<NoContentModel>> AddToRoleAsync(User user, string role);
+
         Task<ResponseModel<NoContentModel>> RegisterAsync(User user, string password);
-        //Task<bool> ResetPasswordAsync(string email, string code, string newPassword, CancellationToken cancellationToken);
+
+        Task<ResponseModel<NoContentModel>> ResetPasswordAsync(string userId, string encodedToken, string newPassword);
     }
 }

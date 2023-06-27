@@ -84,6 +84,15 @@ public class ResponseModel<T>
             };
         return new ResponseModel<T> { Errors = errors, StatusCode = 404, IsSuccessful = false };
     }
+
+    public static ResponseModel<T> FailedToSendEmail()
+    {
+        List<ErrorModel> errors = new()
+            {
+                new ErrorModel(1, "FailedToSendEmail", "An error occurred while sending the email confirmation mail")
+            };
+        return new ResponseModel<T> { Errors = errors, StatusCode = 500, IsSuccessful = false };
+    }
     #endregion
 
     #region Async

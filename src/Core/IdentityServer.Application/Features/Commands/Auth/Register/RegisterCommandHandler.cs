@@ -20,7 +20,6 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommandRequest, Re
 
         return await _authService.SendEmailConfirmationTokenAsync(user)
             ? await ResponseModel<NoContentModel>.SuccessAsync(StatusCodes.Status201Created)
-            : await ResponseModel<NoContentModel>.FailureAsync(1, "FailedToSendEmailConfirmationMail",
-            "An error occurred while sending the email confirmation mail", StatusCodes.Status500InternalServerError);
+            : ResponseModel<NoContentModel>.FailedToSendEmail();
     }
 }

@@ -53,24 +53,37 @@ public class AuthService : IAuthService
         return await _mailService.SendEmailConfirmationMailAsync(user.Email, user.Id.ToString(), encodedToken);
     }
 
-    //public async Task<bool> ResetPasswordAsync(string email, string code, string newPassword, CancellationToken cancellationToken)
-    //{
-    //    User user = await _userManager.FindByEmailAsync(email);
-    //    if (user is not null)
-    //    {
-    //        var verifyCode = await _codeService.IsVerifiedAsync(user.Id, code, cancellationToken);
-    //        if (!verifyCode) throw new CustomApplicationException("Verification code could not be verified.");
+    public async Task<ResponseModel<NoContentModel>> ForgotPasswordAsync(string email)
+    {
+        User user = await _userManager.FindByEmailAsync(email);
+        if (user is null) return ResponseModel<NoContentModel>.UserNotFound();
 
-    //        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var resetPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var encodedToken = CryptographyExtensions.UrlEncode(resetPasswordToken);
 
-    //        IdentityResult result = await _userManager.ResetPasswordAsync(user, token, newPassword);
-    //        if (!result.Succeeded) throw new CustomApplicationException("Reset Password Exception");
+        return await _mailService.SendResetPasswordMailAsync(user.Email, user.Id.ToString(), encodedToken)
+            ? await ResponseModel<NoContentModel>.SuccessAsync()
+            : ResponseModel<NoContentModel>.FailedToSendEmail();
+    }
 
-    //        IdentityResult securityResult = await _userManager.UpdateSecurityStampAsync(user);
-    //        if (!securityResult.Succeeded) throw new CustomApplicationException("Security Stamp Result");
+    public async Task<ResponseModel<NoContentModel>> ResetPasswordAsync(string userId, string encodedToken, string newPassword)
+    {
+        User user = await _userManager.FindByIdAsync(userId);
+        if (user is null) return ResponseModel<NoContentModel>.UserNotFound();
 
-    //        return true;
-    //    }
-    //    throw new NotFoundException("User Not Found");
-    //}
+        var token = encodedToken.UrlDecode();
+        var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+        if (!result.Succeeded)
+        {
+            List<ErrorModel> errors = new();
+            foreach (var error in result.Errors)
+            {
+                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                _logger.LogWarning($"An error occurred while resetting the password. User: {user.Email} Code: {error.Code} Message: {error.Description}");
+            }
+            return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
+        }
+        return await ResponseModel<NoContentModel>.SuccessAsync();
+    }
 }

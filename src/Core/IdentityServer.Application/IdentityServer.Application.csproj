@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Commands\Auth\Logins\" />
-    <Folder Include="Features\Commands\Auth\ResetPassword\" />
     <Folder Include="Features\Queries\" />
     <Folder Include="Features\Notifications\" />
   </ItemGroup>
