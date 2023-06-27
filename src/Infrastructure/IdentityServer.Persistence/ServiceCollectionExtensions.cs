@@ -1,4 +1,6 @@
-﻿namespace IdentityServer.Persistence;
+﻿using IdentityServer.Persistence.Validators;
+
+namespace IdentityServer.Persistence;
 
 public static class ServiceCollectionExtensions
 {
@@ -33,12 +35,18 @@ public static class ServiceCollectionExtensions
     {
         services.AddIdentity<User, Role>(opts =>
         {
+            opts.User.RequireUniqueEmail = true;
+
             opts.Password.RequiredLength = 8;
             opts.Password.RequireDigit = false;
 
             opts.Lockout.AllowedForNewUsers = true;
             opts.Lockout.MaxFailedAccessAttempts = 3;
             opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-        }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+        })
+            .AddPasswordValidator<IdentityPasswordValidator>()
+            .AddUserValidator<IdentityUserValidator>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
     }
 }
