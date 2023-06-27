@@ -6,8 +6,12 @@ public interface IMailService
 
     Task<bool> SendAsync(List<string> addresses, string subject, string body);
 
-    Task<bool> SendResetPasswordMailAsync(string to, string userId, string token);
+    Task<bool> SendChangePasswordMailAsync(string to, Guid userId, string code);
 
-    Task<bool> SendEmailConfirmationMailAsync(string to, string userId, string token);
+    Task<bool> SendForgotPasswordMailAsync(string to, Guid userId, string code);
+
+    Task<bool> SendEmailConfirmationMailAsync(string to, Guid userId, string code);
+
+    Task<bool> SendChangeEmailConfirmationMailAsync(string to, Guid userId, string code);
 }
 

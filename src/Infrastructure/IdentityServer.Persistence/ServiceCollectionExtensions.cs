@@ -1,6 +1,4 @@
-﻿using IdentityServer.Persistence.Validators;
-
-namespace IdentityServer.Persistence;
+﻿namespace IdentityServer.Persistence;
 
 public static class ServiceCollectionExtensions
 {
@@ -25,10 +23,12 @@ public static class ServiceCollectionExtensions
 
     private static void AddRepositories(this IServiceCollection services)
     {
+        services.AddScoped<IUserCodesRepository, UserCodesRepository>();
     }
 
     private static void AddServices(this IServiceCollection services)
     {
+        services.AddScoped<ICodeService, CodeService>();
     }
 
     private static void AddIdentity(this IServiceCollection services)

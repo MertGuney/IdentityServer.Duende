@@ -18,9 +18,4 @@
     <ProjectReference Include="..\..\Core\IdentityServer.Application\IdentityServer.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>

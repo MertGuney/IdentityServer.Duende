@@ -1,6 +1,4 @@
-﻿using IdentityServer.Application.Services.Abstractions;
-
-namespace IdentityServer.Infrastructure;
+﻿namespace IdentityServer.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {
@@ -22,6 +20,7 @@ public static class ServiceCollectionExtensions
 
     private static void AddServices(this IServiceCollection services)
     {
+        services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IMailService, MailService>();
     }

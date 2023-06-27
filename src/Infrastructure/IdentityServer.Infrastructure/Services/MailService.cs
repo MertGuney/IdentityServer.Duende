@@ -40,19 +40,24 @@ public class MailService : IMailService
         }
     }
 
-    public async Task<bool> SendEmailConfirmationMailAsync(string to, string userId, string token)
+    public async Task<bool> SendEmailConfirmationMailAsync(string to, Guid userId, string code)
     {
-        return await SendAsync(to, "Email Confirmation", $"{userId}/{token}");
+        return await SendAsync(to, "Email Confirmation", $"{userId}/{code}");
     }
 
-    public async Task<bool> SendResetPasswordMailAsync(string to, string userId, string token)
+    public async Task<bool> SendChangeEmailConfirmationMailAsync(string to, Guid userId, string code)
     {
-        return await SendAsync(to, "Reset Password", $"{userId}/{token}");
+        return await SendAsync(to, "Email Confirmation", $"{userId}/{code}");
     }
 
-    public async Task<bool> SendForgotPasswordMailAsync(string to, string userId, string token)
+    public async Task<bool> SendChangePasswordMailAsync(string to, Guid userId, string code)
     {
-        return await SendAsync(to, "Forgot Password", $"{userId}/{token}");
+        return await SendAsync(to, "Reset Password", $"{userId}/{code}");
+    }
+
+    public async Task<bool> SendForgotPasswordMailAsync(string to, Guid userId, string code)
+    {
+        return await SendAsync(to, "Forgot Password", $"{userId}/{code}");
     }
 
     private static SmtpClient GetSmtpClient()

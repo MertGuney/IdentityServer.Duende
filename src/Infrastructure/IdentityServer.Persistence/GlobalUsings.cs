@@ -1,12 +1,19 @@
 ﻿// Global using directives
 
+global using IdentityServer.Application.Repositories;
+global using IdentityServer.Application.Services.Abstractions;
 global using IdentityServer.Domain.Common;
 global using IdentityServer.Domain.Common.Interfaces;
 global using IdentityServer.Domain.Entities;
+global using IdentityServer.Domain.Enums;
 global using IdentityServer.Persistence.Contexts;
+global using IdentityServer.Persistence.Repositories;
+global using IdentityServer.Persistence.Services;
+global using IdentityServer.Persistence.Validators;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
+global using System.Reflection;
