@@ -11,6 +11,6 @@ public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordComman
 
     public async Task<ResponseModel<NoContentModel>> Handle(ForgotPasswordCommandRequest request, CancellationToken cancellationToken)
     {
-        return await _authService.ForgotPasswordAsync(request.Email);
+        return await _authService.ForgotPasswordAsync(request.Email, cancellationToken);
     }
 }
