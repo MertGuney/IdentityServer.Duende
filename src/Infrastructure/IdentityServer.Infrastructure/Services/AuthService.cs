@@ -12,42 +12,37 @@ public class AuthService : IAuthService
         _userManager = userManager;
     }
 
-    public async Task<bool> RegisterAsync(string email, string userName, string password)
+    public async Task<ResponseModel<NoContentModel>> RegisterAsync(User user, string password)
     {
-        User user = new(email, userName);
-
         IdentityResult result = await _userManager.CreateAsync(user, password);
 
         if (!result.Succeeded)
         {
+            List<ErrorModel> errors = new();
             foreach (var error in result.Errors)
             {
-                _logger.LogWarning($"An error occurred while creating user. User: {email} Code: {error.Code} Message: {error.Description}");
+                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                _logger.LogWarning($"An error occurred while creating the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
-            return false;
+            return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
         }
-        else
-        {
-            var addToRoleResult = await AddToRoleAsync(user, "Customer");
-            if (!addToRoleResult) return false;
-
-            return await SendEmailConfirmationTokenAsync(user);
-        }
+        return await ResponseModel<NoContentModel>.SuccessAsync(StatusCodes.Status201Created);
     }
 
-    public async Task<bool> AddToRoleAsync(User user, string role)
+    public async Task<ResponseModel<NoContentModel>> AddToRoleAsync(User user, string role)
     {
         IdentityResult result = await _userManager.AddToRoleAsync(user, role);
-
         if (!result.Succeeded)
         {
+            List<ErrorModel> errors = new();
             foreach (var error in result.Errors)
             {
-                _logger.LogWarning($"An error occurred while adding the role to the user. Code: {error.Code} Message: {error.Description}");
+                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                _logger.LogWarning($"An error occurred while adding the role to the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
-            return false;
+            return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
         }
-        return true;
+        return await ResponseModel<NoContentModel>.SuccessAsync();
     }
 
     public async Task<bool> SendEmailConfirmationTokenAsync(User user)

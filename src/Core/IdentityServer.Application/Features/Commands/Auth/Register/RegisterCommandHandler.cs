@@ -10,8 +10,17 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommandRequest, Re
     //TODO: Wrong error code
     public async Task<ResponseModel<NoContentModel>> Handle(RegisterCommandRequest request, CancellationToken cancellationToken)
     {
-        return await _authService.RegisterAsync(request.Email, request.UserName, request.Password)
+        User user = new(request.Email, request.UserName);
+
+        var registerResponse = await _authService.RegisterAsync(user, request.Password);
+        if (!registerResponse.IsSuccessful) return registerResponse;
+
+        var addUserToRoleResponse = await _authService.AddToRoleAsync(user, "Customer");
+        if (!addUserToRoleResponse.IsSuccessful) return addUserToRoleResponse;
+
+        return await _authService.SendEmailConfirmationTokenAsync(user)
             ? await ResponseModel<NoContentModel>.SuccessAsync(StatusCodes.Status201Created)
-            : await ResponseModel<NoContentModel>.FailureAsync(1, "Register Error.", "An error occurred while user registering the user.", StatusCodes.Status500InternalServerError);
+            : await ResponseModel<NoContentModel>.FailureAsync(1, "FailedToSendEmailConfirmationMail",
+            "An error occurred while sending the email confirmation mail", StatusCodes.Status500InternalServerError);
     }
 }
