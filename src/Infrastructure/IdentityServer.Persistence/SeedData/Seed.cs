@@ -21,10 +21,8 @@ public static class Seed
     {
         if (!userManager.Users.Any())
         {
-            User user = new()
+            User user = new("super@admin.com", "SuperAdmin")
             {
-                UserName = "SuperAdmin",
-                Email = "super@admin.com",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 PhoneNumber = "905555555555",
@@ -40,7 +38,12 @@ public static class Seed
         using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
 
         var appDbContext = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
-        await appDbContext.Database.MigrateAsync();
+
+        var migrations = appDbContext.Database.GetMigrations();
+        var appliedMigrations = await appDbContext.Database.GetAppliedMigrationsAsync();
+
+        if (migrations.Count() > appliedMigrations.Count()) await appDbContext.Database.MigrateAsync();
+
 
         var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
         await Seed.CreateRolesAsync(roleManager);
