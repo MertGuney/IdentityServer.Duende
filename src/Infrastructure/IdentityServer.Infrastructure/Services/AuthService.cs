@@ -48,7 +48,7 @@ public class AuthService : IAuthService
     public async Task<bool> SendEmailConfirmationTokenAsync(User user)
     {
         var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-        var encodedToken = CryptographyExtensions.UrlEncode(confirmationToken);
+        var encodedToken = confirmationToken.UrlEncode();
 
         return await _mailService.SendEmailConfirmationMailAsync(user.Email, user.Id.ToString(), encodedToken);
     }
@@ -59,7 +59,7 @@ public class AuthService : IAuthService
         if (user is null) return ResponseModel<NoContentModel>.UserNotFound();
 
         var resetPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-        var encodedToken = CryptographyExtensions.UrlEncode(resetPasswordToken);
+        var encodedToken = resetPasswordToken.UrlEncode();
 
         return await _mailService.SendResetPasswordMailAsync(user.Email, user.Id.ToString(), encodedToken)
             ? await ResponseModel<NoContentModel>.SuccessAsync()
