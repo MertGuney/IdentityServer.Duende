@@ -10,8 +10,8 @@ public class TFAController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Enable(EnableTFACommandRequest request)
-        => ActionResultInstance(await _mediator.Send(request));
+    public async Task<IActionResult> Enable()
+        => ActionResultInstance(await _mediator.Send(new EnableTFACommandRequest()));
 
     [HttpPost]
     public async Task<IActionResult> Activate(ActivateTFACommandRequest request)
