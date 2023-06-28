@@ -16,44 +16,6 @@ public class AuthService : IAuthService
         _userManager = userManager;
     }
 
-    public async Task<User> FindByEmailAsync(string email)
-    {
-        return await _userManager.FindByEmailAsync(email);
-    }
-
-    public async Task<ResponseModel<NoContentModel>> RegisterAsync(User user, string password)
-    {
-        IdentityResult result = await _userManager.CreateAsync(user, password);
-
-        if (!result.Succeeded)
-        {
-            List<ErrorModel> errors = new();
-            foreach (var error in result.Errors)
-            {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
-                _logger.LogWarning($"An error occurred while creating the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
-            }
-            return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
-        }
-        return await ResponseModel<NoContentModel>.SuccessAsync(StatusCodes.Status201Created);
-    }
-
-    public async Task<ResponseModel<NoContentModel>> AddToRoleAsync(User user, string role)
-    {
-        IdentityResult result = await _userManager.AddToRoleAsync(user, role);
-        if (!result.Succeeded)
-        {
-            List<ErrorModel> errors = new();
-            foreach (var error in result.Errors)
-            {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
-                _logger.LogWarning($"An error occurred while adding the role to the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
-            }
-            return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
-        }
-        return await ResponseModel<NoContentModel>.SuccessAsync();
-    }
-
     public async Task<ResponseModel<NoContentModel>> ForgotPasswordAsync(string email, CancellationToken cancellationToken)
     {
         User user = await _userManager.FindByEmailAsync(email);
