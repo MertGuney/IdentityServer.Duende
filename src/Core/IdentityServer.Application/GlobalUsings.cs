@@ -8,6 +8,7 @@ global using IdentityServer.Application.Common.ActionFilters;
 global using IdentityServer.Application.Common.Behaviors;
 global using IdentityServer.Application.Common.Exceptions;
 global using IdentityServer.Application.Common.Utilities.Regexs;
+global using IdentityServer.Application.Features.Queries.Users.GetCurrentUser;
 global using IdentityServer.Application.Services.Abstractions;
 global using IdentityServer.Application.Services.Concretes;
 global using IdentityServer.Domain.Entities;
