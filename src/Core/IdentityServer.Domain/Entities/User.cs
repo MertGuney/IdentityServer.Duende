@@ -8,6 +8,7 @@ namespace IdentityServer.Domain.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
         public string IdentityNumber { get; set; }
+        public DateTime? BirthDate { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public bool IsActive { get; set; }

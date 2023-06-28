@@ -7,5 +7,6 @@ public class GetCurrentUserQueryResponse
     public string Email { get; set; }
     public string Surname { get; set; }
     public string UserName { get; set; }
+    public DateTime BirthDate { get; set; }
     public string IdentityNumber { get; set; }
 }
