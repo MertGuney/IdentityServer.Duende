@@ -1,6 +1,5 @@
-﻿using IdentityServer.Domain.Enums;
+﻿namespace IdentityServer.Infrastructure.Services;
 
-namespace IdentityServer.Infrastructure.Services;
 public class AuthService : IAuthService
 {
     private readonly IMailService _mailService;
@@ -46,7 +45,6 @@ public class AuthService : IAuthService
         }
         return await ResponseModel<NoContentModel>.SuccessAsync();
     }
-
 
     public async Task<ResponseModel<NoContentModel>> ResetPasswordAsync(User user, string newPassword)
     {

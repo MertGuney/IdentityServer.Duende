@@ -18,14 +18,30 @@ public class UserService : IUserService
         return await _userManager.FindByIdAsync(_currentUserService.UserId);
     }
 
+    public async Task<User> GetByEmailAsync(string email)
+    {
+        return await _userManager.FindByEmailAsync(email);
+    }
+
     public async Task<User> GetByUserNameAsync(string username)
     {
         return await _userManager.FindByNameAsync(username);
     }
 
-    public async Task<User> GetByEmailAsync(string email)
+    public async Task<ResponseModel<NoContentModel>> UpdateAsync(User user)
     {
-        return await _userManager.FindByEmailAsync(email);
+        IdentityResult result = await _userManager.UpdateAsync(user);
+        if (!result.Succeeded)
+        {
+            List<ErrorModel> errors = new();
+            foreach (var error in result.Errors)
+            {
+                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                _logger.LogWarning($"An error occurred while updating to the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
+            }
+            return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
+        }
+        return await ResponseModel<NoContentModel>.SuccessAsync();
     }
 
     public async Task<ResponseModel<NoContentModel>> CreateAsync(User user, string password)
@@ -55,22 +71,6 @@ public class UserService : IUserService
             {
                 errors.Add(new ErrorModel(1, error.Code, error.Description));
                 _logger.LogWarning($"An error occurred while adding the role to the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
-            }
-            return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
-        }
-        return await ResponseModel<NoContentModel>.SuccessAsync();
-    }
-
-    public async Task<ResponseModel<NoContentModel>> UpdateAsync(User user)
-    {
-        IdentityResult result = await _userManager.UpdateAsync(user);
-        if (!result.Succeeded)
-        {
-            List<ErrorModel> errors = new();
-            foreach (var error in result.Errors)
-            {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
-                _logger.LogWarning($"An error occurred while updating to the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
         }

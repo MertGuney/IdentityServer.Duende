@@ -1,12 +1,11 @@
-﻿// Global using directives
-
-global using AutoMapper;
+﻿global using AutoMapper;
 global using FluentValidation;
 global using FluentValidation.AspNetCore;
 global using IdentityServer.Application;
 global using IdentityServer.Application.Common.ActionFilters;
 global using IdentityServer.Application.Common.Behaviors;
 global using IdentityServer.Application.Common.Exceptions;
+global using IdentityServer.Application.Common.Extensions;
 global using IdentityServer.Application.Common.Utilities.Regexs;
 global using IdentityServer.Application.Features.Queries.Users.GetCurrentUser;
 global using IdentityServer.Application.Services.Abstractions;

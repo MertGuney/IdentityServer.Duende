@@ -20,9 +20,11 @@ public static class ServiceCollectionExtensions
 
     private static void AddServices(this IServiceCollection services)
     {
+        services.AddScoped<ITFAService, TFAService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IMailService, MailService>();
+        services.AddScoped<IQRCodeService, QRCodeService>();
     }
 
     private static void AddDevelopmentIdentity(this IServiceCollection services)

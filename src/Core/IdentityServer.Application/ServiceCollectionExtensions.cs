@@ -1,6 +1,5 @@
-﻿using IdentityServer.Application.Common.Extensions;
+﻿namespace IdentityServer.Application;
 
-namespace IdentityServer.Application;
 public static class ServiceCollectionExtensions
 {
     public static void AddApplicationLayer(this IServiceCollection services)

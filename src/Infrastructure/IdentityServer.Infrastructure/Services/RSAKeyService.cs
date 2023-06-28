@@ -1,4 +1,5 @@
 ﻿namespace IdentityServer.Infrastructure.Services;
+
 public class RSAKeyService
 {
     private readonly TimeSpan _timeSpan;
