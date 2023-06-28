@@ -1,5 +1,6 @@
 ﻿// Global using directives
 
+global using AutoMapper;
 global using FluentValidation;
 global using FluentValidation.AspNetCore;
 global using IdentityServer.Application;

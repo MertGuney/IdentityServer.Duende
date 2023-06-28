@@ -1,4 +1,6 @@
-﻿namespace IdentityServer.Api.Controllers
+﻿using IdentityServer.Application.Features.Queries.Users.GetCurrentUser;
+
+namespace IdentityServer.Api.Controllers
 {
     [Route("api/users/[action]")]
     [ApiController]
@@ -7,6 +9,10 @@
         public UsersController(IMediator mediator) : base(mediator)
         {
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Current()
+            => ActionResultInstance(await _mediator.Send(new GetCurrentUserQueryRequest()));
 
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordCommandRequest request)
