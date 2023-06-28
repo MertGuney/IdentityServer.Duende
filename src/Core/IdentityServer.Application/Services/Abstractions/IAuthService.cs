@@ -2,13 +2,7 @@
 {
     public interface IAuthService
     {
-        Task<User> FindByEmailAsync(string email);
-
         Task<ResponseModel<NoContentModel>> UpdateSecurityStampAsync(User user);
-
-        Task<ResponseModel<NoContentModel>> AddToRoleAsync(User user, string role);
-
-        Task<ResponseModel<NoContentModel>> RegisterAsync(User user, string password);
 
         Task<ResponseModel<NoContentModel>> ResetPasswordAsync(User user, string newPassword);
 
