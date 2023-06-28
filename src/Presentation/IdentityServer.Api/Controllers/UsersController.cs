@@ -1,9 +1,8 @@
-﻿using IdentityServer.Application.Features.Queries.Users.GetCurrentUser;
-
-namespace IdentityServer.Api.Controllers
+﻿namespace IdentityServer.Api.Controllers
 {
     [Route("api/users/[action]")]
     [ApiController]
+    [Authorize(LocalApi.PolicyName)]
     public class UsersController : BaseController
     {
         public UsersController(IMediator mediator) : base(mediator)
