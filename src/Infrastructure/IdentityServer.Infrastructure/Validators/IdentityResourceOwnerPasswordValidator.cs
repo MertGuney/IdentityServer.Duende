@@ -17,7 +17,26 @@ public class IdentityResourceOwnerPasswordValidator : IResourceOwnerPasswordVali
         if (!signInResult.Succeeded)
         {
             Dictionary<string, object> errors = new();
-            if (signInResult.IsLockedOut)
+            if (signInResult.RequiresTwoFactor)
+            {
+                var code = context.Request.Raw.Get("code");
+                if (string.IsNullOrWhiteSpace(code))
+                {
+                    errors.Add("errors", new List<string> { "Your account is protected by 2FA, please enter the code." });
+                    context.Result.CustomResponse = errors;
+                    context.Result.ErrorDescription = "required_auth_code";
+                    return;
+                }
+                var tfaSignInResult = await _signInManager.TwoFactorAuthenticatorSignInAsync(code, false, false);
+                if (!tfaSignInResult.Succeeded)
+                {
+                    errors.Add("errors", new List<string> { "Invalid Authentication Code, please try again." });
+                    context.Result.CustomResponse = errors;
+                    context.Result.ErrorDescription = "invalid_auth_code";
+                    return;
+                }
+            }
+            else if (signInResult.IsLockedOut)
             {
                 errors.Add("errors", new List<string> { "Your account is locked out, please try again 5 minutes later." });
                 context.Result.CustomResponse = errors;
@@ -26,9 +45,9 @@ public class IdentityResourceOwnerPasswordValidator : IResourceOwnerPasswordVali
             }
             else
             {
-                errors.Add("errors", new List<string> { "Invalid phone number or password" });
+                errors.Add("errors", new List<string> { "Invalid username or password" });
                 context.Result.CustomResponse = errors;
-                context.Result.ErrorDescription = "invalid_phone_or_password";
+                context.Result.ErrorDescription = "invalid_username_or_password";
                 return;
             }
         }
