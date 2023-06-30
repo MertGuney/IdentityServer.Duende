@@ -13,14 +13,6 @@ public class AuthController : BaseController
         => ActionResultInstance(await _mediator.Send(request));
 
     [HttpPost]
-    public async Task<IActionResult> ForgotPassword(ForgotPasswordCommandRequest request)
-        => ActionResultInstance(await _mediator.Send(request));
-
-    [HttpPost]
     public async Task<IActionResult> ResetPassword(ResetPasswordCommandRequest request)
-        => ActionResultInstance(await _mediator.Send(request));
-
-    [HttpPost]
-    public async Task<IActionResult> VerifyCode(VerifyCodeCommandRequest request)
         => ActionResultInstance(await _mediator.Send(request));
 }

@@ -1,6 +1,4 @@
-﻿using IdentityServer.Application.Features.Commands.Users.ChangePassword;
-
-namespace IdentityServer.Api.Controllers;
+﻿namespace IdentityServer.Api.Controllers;
 
 [Route("api/users/[action]")]
 [ApiController]
@@ -15,7 +13,11 @@ public class UsersController : BaseController
     public async Task<IActionResult> Current()
         => ActionResultInstance(await _mediator.Send(new GetCurrentUserQueryRequest()));
 
-    [HttpPost]
+    [HttpPut]
+    public async Task<IActionResult> ChangeEmail(ChangeEmailCommandRequest request)
+    => ActionResultInstance(await _mediator.Send(request));
+
+    [HttpPut]
     public async Task<IActionResult> ChangePassword(ChangePasswordCommandRequest request)
         => ActionResultInstance(await _mediator.Send(request));
 }
