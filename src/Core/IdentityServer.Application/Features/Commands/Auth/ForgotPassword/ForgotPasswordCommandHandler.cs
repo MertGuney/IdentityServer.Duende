@@ -2,15 +2,25 @@
 
 public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommandRequest, ResponseModel<NoContentModel>>
 {
-    private readonly IAuthService _authService;
+    private readonly IUserService _userService;
+    private readonly ICodeService _codeService;
+    private readonly IMailService _mailService;
 
-    public ForgotPasswordCommandHandler(IAuthService authService)
+    public ForgotPasswordCommandHandler(IUserService userService, ICodeService codeService, IMailService mailService)
     {
-        _authService = authService;
+        _userService = userService;
+        _codeService = codeService;
+        _mailService = mailService;
     }
 
     public async Task<ResponseModel<NoContentModel>> Handle(ForgotPasswordCommandRequest request, CancellationToken cancellationToken)
     {
-        return await _authService.ForgotPasswordAsync(request.Email, cancellationToken);
+        User user = await _userService.GetByEmailAsync(request.Email);
+
+        var code = await _codeService.GenerateAsync(user.Id, CodeTypeEnum.ForgotPassword, cancellationToken);
+
+        return await _mailService.SendForgotPasswordMailAsync(user.Email, user.Id, code)
+            ? await ResponseModel<NoContentModel>.SuccessAsync()
+            : ResponseModel<NoContentModel>.FailedToSendEmail();
     }
 }

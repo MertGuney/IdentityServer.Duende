@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.Application.Features.Commands.Auth.ChangePassword;
+﻿namespace IdentityServer.Application.Features.Commands.Users.ChangePassword;
 
 public class ChangePasswordCommandRequest : IRequest<ResponseModel<NoContentModel>>
 {

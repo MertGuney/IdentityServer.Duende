@@ -6,6 +6,8 @@ public interface IMailService
 
     Task<bool> SendAsync(List<string> addresses, string subject, string body);
 
+    Task<bool> SendAsync(string to, Guid userId, string code, CodeTypeEnum codeType);
+
     Task<bool> SendChangePasswordMailAsync(string to, Guid userId, string code);
 
     Task<bool> SendForgotPasswordMailAsync(string to, Guid userId, string code);

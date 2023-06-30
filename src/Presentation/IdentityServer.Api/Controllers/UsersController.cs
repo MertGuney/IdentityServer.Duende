@@ -1,4 +1,6 @@
-﻿namespace IdentityServer.Api.Controllers;
+﻿using IdentityServer.Application.Features.Commands.Users.ChangePassword;
+
+namespace IdentityServer.Api.Controllers;
 
 [Route("api/users/[action]")]
 [ApiController]

@@ -1,6 +1,5 @@
 ﻿global using IdentityServer.Application;
 global using IdentityServer.Application.Common.Extensions;
-global using IdentityServer.Application.Features.Commands.Auth.ChangePassword;
 global using IdentityServer.Application.Features.Commands.Auth.ForgotPassword;
 global using IdentityServer.Application.Features.Commands.Auth.Register;
 global using IdentityServer.Application.Features.Commands.Auth.ResetPassword;

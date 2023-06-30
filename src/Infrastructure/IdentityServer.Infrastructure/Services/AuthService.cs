@@ -2,29 +2,13 @@
 
 public class AuthService : IAuthService
 {
-    private readonly IMailService _mailService;
-    private readonly ICodeService _codeService;
     private readonly ILogger<AuthService> _logger;
     private readonly UserManager<User> _userManager;
 
-    public AuthService(IMailService mailService, ICodeService codeService, ILogger<AuthService> logger, UserManager<User> userManager)
+    public AuthService(ILogger<AuthService> logger, UserManager<User> userManager)
     {
-        _mailService = mailService;
-        _codeService = codeService;
         _logger = logger;
         _userManager = userManager;
-    }
-
-    public async Task<ResponseModel<NoContentModel>> ForgotPasswordAsync(string email, CancellationToken cancellationToken)
-    {
-        User user = await _userManager.FindByEmailAsync(email);
-        if (user is null) return ResponseModel<NoContentModel>.UserNotFound();
-
-        var code = await _codeService.GenerateAsync(user.Id, CodeTypeEnum.ForgotPassword, cancellationToken);
-
-        return await _mailService.SendForgotPasswordMailAsync(user.Email, user.Id, code)
-            ? await ResponseModel<NoContentModel>.SuccessAsync()
-            : ResponseModel<NoContentModel>.FailedToSendEmail();
     }
 
     public async Task<ResponseModel<NoContentModel>> ChangePasswordAsync(User user, string currentPassword, string newPassword)
@@ -37,6 +21,42 @@ public class AuthService : IAuthService
         {
             List<ErrorModel> errors = new();
             foreach (var error in changePasswordResult.Errors)
+            {
+                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                _logger.LogWarning($"An error occurred while changing the password. User: {user.Email} Code: {error.Code} Message: {error.Description}");
+            }
+            return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
+        }
+        return await ResponseModel<NoContentModel>.SuccessAsync();
+    }
+
+    public async Task<ResponseModel<NoContentModel>> ChangeEmailAsync(User user, string newEmail)
+    {
+        var changeEmailToken = await _userManager.GenerateChangeEmailTokenAsync(user, newEmail);
+
+        var changeEmailResult = await _userManager.ChangeEmailAsync(user, newEmail, changeEmailToken);
+        if (!changeEmailResult.Succeeded)
+        {
+            List<ErrorModel> errors = new();
+            foreach (var error in changeEmailResult.Errors)
+            {
+                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                _logger.LogWarning($"An error occurred while changing the password. User: {user.Email} Code: {error.Code} Message: {error.Description}");
+            }
+            return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
+        }
+        return await ResponseModel<NoContentModel>.SuccessAsync();
+    }
+
+    public async Task<ResponseModel<NoContentModel>> ConfirmEmailAsync(User user)
+    {
+        var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+        var result = await _userManager.ConfirmEmailAsync(user, emailConfirmationToken);
+        if (!result.Succeeded)
+        {
+            List<ErrorModel> errors = new();
+            foreach (var error in result.Errors)
             {
                 errors.Add(new ErrorModel(1, error.Code, error.Description));
                 _logger.LogWarning($"An error occurred while changing the password. User: {user.Email} Code: {error.Code} Message: {error.Description}");
