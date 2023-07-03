@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Commands\Auth\Logins\" />
     <Folder Include="Features\Notifications\" />
   </ItemGroup>
 

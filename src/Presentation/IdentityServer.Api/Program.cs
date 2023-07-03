@@ -7,7 +7,26 @@ builder.Services.AddPersistenceLayer(builder.Configuration);
 
 builder.Services.AddInfrastructureLayer(builder.Configuration, builder.Environment);
 
-builder.Services.AddAuthentication();
+var authenticationBuilder = builder.Services.AddAuthentication();
+
+authenticationBuilder.AddGoogle("Google", opts =>
+{
+    opts.ClientId = "790647006486-n4666sbm1i13n56smle2b4niassfp7gm.apps.googleusercontent.com";
+    opts.ClientSecret = "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";
+    opts.SignInScheme = IdentityConstants.ExternalScheme;
+    opts.Scope.Add(JwtClaimTypes.Profile);
+});
+//authenticationBuilder.AddTwitter(opts =>
+//{
+//    opts.ConsumerKey = "";
+//    opts.ConsumerSecret = "";
+//});
+//authenticationBuilder.AddFacebook(opts =>
+//{
+//    opts.ClientId = "";
+//    opts.ClientSecret = "";
+//    opts.Fields.Add(JwtClaimTypes.Picture);
+//});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

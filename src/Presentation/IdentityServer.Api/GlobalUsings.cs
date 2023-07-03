@@ -1,4 +1,5 @@
-﻿global using IdentityServer.Application;
+﻿global using IdentityModel;
+global using IdentityServer.Application;
 global using IdentityServer.Application.Common.Extensions;
 global using IdentityServer.Application.Features.Commands.Auth.Register;
 global using IdentityServer.Application.Features.Commands.Auth.ResetPassword;
@@ -16,5 +17,6 @@ global using IdentityServer.Persistence.SeedData;
 global using IdentityServer.Shared.Models;
 global using MediatR;
 global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Mvc;
 global using static Duende.IdentityServer.IdentityServerConstants;

@@ -10,7 +10,9 @@ public interface IUserService
 
     Task<ResponseModel<NoContentModel>> UpdateAsync(User User);
 
+    Task<ResponseModel<NoContentModel>> AddToRoleAsync(User user, string role);
+
     Task<ResponseModel<NoContentModel>> CreateAsync(User user, string password);
 
-    Task<ResponseModel<NoContentModel>> AddToRoleAsync(User user, string role);
+    Task<ResponseModel<NoContentModel>> CreateLoginAsync(User user, UserLoginInfo loginInfo);
 }

@@ -61,6 +61,23 @@ public class UserService : IUserService
         return await ResponseModel<NoContentModel>.SuccessAsync(StatusCodes.Status201Created);
     }
 
+    public async Task<ResponseModel<NoContentModel>> CreateLoginAsync(User user, UserLoginInfo loginInfo)
+    {
+        IdentityResult result = await _userManager.AddLoginAsync(user, loginInfo);
+
+        if (!result.Succeeded)
+        {
+            List<ErrorModel> errors = new();
+            foreach (var error in result.Errors)
+            {
+                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                _logger.LogWarning($"An error occurred while creating the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
+            }
+            return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
+        }
+        return await ResponseModel<NoContentModel>.SuccessAsync(StatusCodes.Status201Created);
+    }
+
     public async Task<ResponseModel<NoContentModel>> AddToRoleAsync(User user, string role)
     {
         IdentityResult result = await _userManager.AddToRoleAsync(user, role);
