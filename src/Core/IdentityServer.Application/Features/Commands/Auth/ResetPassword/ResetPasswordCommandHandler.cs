@@ -18,7 +18,7 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommandR
         User user = await _userService.GetByEmailAsync(request.Email);
         if (user is null) return ResponseModel<NoContentModel>.UserNotFound();
 
-        var isVerifiedCode = await _codeService.IsVerifiedAsync(user.Id, request.Code, CodeTypeEnum.ForgotPassword, cancellationToken);
+        var isVerifiedCode = await _codeService.VerifyAsync(user.Id, request.Code, CodeTypeEnum.ForgotPassword, cancellationToken);
         if (!isVerifiedCode)
             return await ResponseModel<NoContentModel>.FailureAsync(1, "UnverifiedCode", "Code unverified.", StatusCodes.Status400BadRequest);
 
