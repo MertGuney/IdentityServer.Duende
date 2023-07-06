@@ -1,12 +1,14 @@
 ﻿global using IdentityServer.Application;
 global using IdentityServer.Application.Common.Extensions;
+global using IdentityServer.Application.Features.Commands.Auth.Codes.SendChangeEmailCode;
+global using IdentityServer.Application.Features.Commands.Auth.Codes.SendChangePasswordCode;
+global using IdentityServer.Application.Features.Commands.Auth.Codes.SendForgotPasswordCode;
+global using IdentityServer.Application.Features.Commands.Auth.Codes.SendRegisterCode;
 global using IdentityServer.Application.Features.Commands.Auth.Register;
 global using IdentityServer.Application.Features.Commands.Auth.ResetPassword;
-global using IdentityServer.Application.Features.Commands.Auth.SendCode;
 global using IdentityServer.Application.Features.Commands.Auth.TFAs.Activate;
 global using IdentityServer.Application.Features.Commands.Auth.TFAs.Deactivate;
 global using IdentityServer.Application.Features.Commands.Auth.TFAs.Enable;
-global using IdentityServer.Application.Features.Commands.Auth.VerifyCode;
 global using IdentityServer.Application.Features.Commands.Users.ChangeEmail;
 global using IdentityServer.Application.Features.Commands.Users.ChangePassword;
 global using IdentityServer.Application.Features.Queries.Users.GetCurrentUser;

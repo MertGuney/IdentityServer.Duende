@@ -28,6 +28,24 @@ public class UserService : IUserService
         return await _userManager.FindByNameAsync(username);
     }
 
+    public async Task<ResponseModel<NoContentModel>> VerifyEmailAsync(User user)
+    {
+        var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+        IdentityResult result = await _userManager.ConfirmEmailAsync(user, emailConfirmationToken);
+        if (!result.Succeeded)
+        {
+            List<ErrorModel> errors = new();
+            foreach (var error in result.Errors)
+            {
+                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                _logger.LogWarning($"An error occurred while updating to the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
+            }
+            return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
+        }
+        return await ResponseModel<NoContentModel>.SuccessAsync();
+    }
+
     public async Task<ResponseModel<NoContentModel>> UpdateAsync(User user)
     {
         IdentityResult result = await _userManager.UpdateAsync(user);

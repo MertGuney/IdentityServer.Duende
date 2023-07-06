@@ -11,20 +11,7 @@ public class CodeService : ICodeService
 
     public async Task<bool> VerifyAsync(Guid userId, string code, CodeTypeEnum type, CancellationToken cancellationToken)
     {
-        AspNetUserCode aspNetUserCode = await _userCodesRepository.UnverifiedCodeAsync(userId, code, type, cancellationToken);
-        if (aspNetUserCode is not null)
-        {
-            aspNetUserCode.IsVerified = true;
-            aspNetUserCode.AddLastModifier(userId.ToString());
-
-            return await _userCodesRepository.UpdateAsync(aspNetUserCode, cancellationToken);
-        }
-        return false;
-    }
-
-    public async Task<bool> IsVerifiedAsync(Guid userId, string code, CodeTypeEnum type, CancellationToken cancellationToken)
-    {
-        return await _userCodesRepository.IsVerifiedCodeAsync(userId, code, type, cancellationToken);
+        return await _userCodesRepository.VerifyAsync(userId, code, type, cancellationToken);
     }
 
     public async Task<string> GenerateAsync(Guid userId, CodeTypeEnum type, CancellationToken cancellationToken)

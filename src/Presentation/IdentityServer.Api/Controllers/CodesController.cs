@@ -9,10 +9,18 @@ public class CodesController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Send(SendCodeCommandRequest request)
+    public async Task<IActionResult> Send(SendRegisterCodeCommandRequest request)
         => ActionResultInstance(await _mediator.Send(request));
 
     [HttpPost]
-    public async Task<IActionResult> Verify(VerifyCodeCommandRequest request)
+    public async Task<IActionResult> Send(SendChangeEmailCodeCommandRequest request)
+        => ActionResultInstance(await _mediator.Send(request));
+
+    [HttpPost]
+    public async Task<IActionResult> Send(SendChangePasswordCodeCommandRequest request)
+        => ActionResultInstance(await _mediator.Send(request));
+
+    [HttpPost]
+    public async Task<IActionResult> Send(SendForgotPasswordCodeCommandRequest request)
         => ActionResultInstance(await _mediator.Send(request));
 }

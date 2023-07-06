@@ -10,16 +10,14 @@ public class UserCodesRepository : IUserCodesRepository
         _dbSet = _context.Set<AspNetUserCode>();
     }
 
-    public async Task<AspNetUserCode> UnverifiedCodeAsync(Guid userId, string code, CodeTypeEnum type, CancellationToken cancellationToken)
+    public async Task<bool> VerifyAsync(Guid userId, string code, CodeTypeEnum type, CancellationToken cancellationToken)
     {
-        return await _dbSet.Where(x => x.UserId == userId && x.Value == code && x.ExpireTime >= DateTime.Now && x.Type == type && !x.IsVerified)
-            .OrderBy(x => x.CreatedDate)
-            .FirstOrDefaultAsync(cancellationToken);
-    }
-
-    public async Task<bool> IsVerifiedCodeAsync(Guid userId, string code, CodeTypeEnum type, CancellationToken cancellationToken)
-    {
-        return await _dbSet.AnyAsync(x => x.UserId == userId && x.Value == code && x.Type == type && x.IsVerified, cancellationToken);
+        return await _dbSet.AnyAsync(x =>
+        x.Type == type &&
+        x.Value == code &&
+        x.UserId == userId &&
+        x.ExpireTime >= DateTime.UtcNow,
+        cancellationToken);
     }
 
     public async Task<bool> CreateAsync(AspNetUserCode aspNetUserCode, CancellationToken cancellationToken)
