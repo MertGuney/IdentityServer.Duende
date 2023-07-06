@@ -17,7 +17,7 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
     {
         User user = await _userService.GetAsync();
 
-        var isVerified = await _codeService.IsVerifiedAsync(user.Id, request.Code, CodeTypeEnum.ChangePassword, cancellationToken);
+        var isVerified = await _codeService.VerifyAsync(user.Id, request.Code, CodeTypeEnum.ChangePassword, cancellationToken);
         if (!isVerified) return await ResponseModel<NoContentModel>.FailureAsync(1, "Unverified code", "Code unverified", StatusCodes.Status400BadRequest);
 
         var changePasswordResult = await _authService.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);

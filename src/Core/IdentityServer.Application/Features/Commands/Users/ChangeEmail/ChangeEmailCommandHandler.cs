@@ -17,7 +17,7 @@ public class ChangeEmailCommandHandler : IRequestHandler<ChangeEmailCommandReque
     {
         var user = await _userService.GetAsync();
 
-        var isCodeVerified = await _codeService.IsVerifiedAsync(user.Id, request.Code, CodeTypeEnum.ChangeEmail, cancellationToken);
+        var isCodeVerified = await _codeService.VerifyAsync(user.Id, request.Code, CodeTypeEnum.ChangeEmail, cancellationToken);
         if (!isCodeVerified) return await ResponseModel<NoContentModel>.FailureAsync(1,
             "Unverified code",
             "Code unverified",
