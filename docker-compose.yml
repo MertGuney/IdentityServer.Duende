@@ -4,7 +4,7 @@ services:
   db:
     image: postgres
   api:
-    image: api_image
+    image: mertguney/identityserverapi
     build:
       context: .
       dockerfile: src/Presentation/IdentityServer.Api/Dockerfile
