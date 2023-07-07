@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: identity-db
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - identitydb_volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=IdentityServerDb
+      - POSTGRES_PASSWORD=Password*-1
+  api:
+    container_name: identity-api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:DefaultConnection=User ID=postgres;Password=Password*-1;Host=db;Port=5432;Database=IdentityServerDb;Integrated Security=true;Pooling=true;
+    ports:
+      - "5100:80"
+    depends_on:
+      - db

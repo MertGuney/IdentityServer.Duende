@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+  api:
+    image: api_image
+    build:
+      context: .
+      dockerfile: src/Presentation/IdentityServer.Api/Dockerfile
+
+volumes:
+  identitydb_volume:
