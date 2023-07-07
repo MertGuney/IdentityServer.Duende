@@ -2,11 +2,11 @@
 public class AppDbContext : IdentityDbContext<User, Role, Guid>
 {
     private readonly IDomainEventDispatcher _dispatcher;
+
     public AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDispatcher dispatcher) : base(options)
     {
         _dispatcher = dispatcher;
     }
-
 
     public DbSet<AspNetUserCode> AspNetUserCodes { get; set; }
 

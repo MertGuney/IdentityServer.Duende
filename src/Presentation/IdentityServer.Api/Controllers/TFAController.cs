@@ -1,8 +1,9 @@
 ﻿namespace IdentityServer.Api.Controllers;
 
-[Route("api/tfa/[action]")]
 [ApiController]
-[Authorize(LocalApi.PolicyName)]
+[ApiVersion("1.0")]
+[Authorize(Policy = LocalApi.PolicyName)]
+[Route("api/v{version:apiVersion}/tfa/[action]")]
 public class TFAController : BaseController
 {
     public TFAController(IMediator mediator) : base(mediator)

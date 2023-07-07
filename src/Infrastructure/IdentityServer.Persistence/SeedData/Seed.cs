@@ -46,9 +46,9 @@ public static class Seed
 
 
         var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
-        await Seed.CreateRolesAsync(roleManager);
+        await CreateRolesAsync(roleManager);
 
         var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
-        await Seed.CreateUserAsync(userManager);
+        await CreateUserAsync(userManager);
     }
 }

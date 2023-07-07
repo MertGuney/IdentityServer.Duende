@@ -28,7 +28,8 @@ public class UserNotFoundFilterAttribute : IAsyncActionFilter
         }
         else
         {
-            context.Result = new BadRequestObjectResult(ResponseModel<NoContentModel>.Failure(1, "", "Sub value could not be null", StatusCodes.Status400BadRequest));
+            context.Result = new BadRequestObjectResult(ResponseModel<NoContentModel>.Failure(1,
+                "Null sub value", "Sub value could not be null", StatusCodes.Status400BadRequest));
         }
     }
 }

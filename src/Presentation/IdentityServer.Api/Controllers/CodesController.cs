@@ -1,7 +1,8 @@
 ﻿namespace IdentityServer.Api.Controllers;
 
-[Route("api/codes/[action]")]
 [ApiController]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/codes/[action]")]
 public class CodesController : BaseController
 {
     public CodesController(IMediator mediator) : base(mediator)

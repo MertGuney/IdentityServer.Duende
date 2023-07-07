@@ -1,9 +1,8 @@
-﻿using IdentityServer.Domain.Entities;
+﻿namespace IdentityServer.Api.Controllers;
 
-namespace IdentityServer.Api.Controllers;
-
-[Route("api/auth/[action]")]
 [ApiController]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/auth/[action]")]
 public class AuthController : BaseController
 {
     private readonly SignInManager<User> _signInManager;

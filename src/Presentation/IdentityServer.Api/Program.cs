@@ -1,6 +1,19 @@
+var corsPolicyName = "IdentityServerCorsPolicy";
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(corsPolicyName,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+        });
+});
+
 builder.Services.AddApplicationLayer();
 
 builder.Services.AddPersistenceLayer(builder.Configuration);
@@ -28,22 +41,36 @@ authenticationBuilder.AddGoogle("Google", opts =>
 //    opts.Fields.Add(JwtClaimTypes.Picture);
 //});
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader());
+});
+
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(opts =>
+    {
+        opts.SuppressModelStateInvalidFilter = true;
+    });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseSwagger();
+app.UseSwaggerUI();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
     await app.InitializeDevelopmentDatabaseAsync();
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(corsPolicyName);
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 

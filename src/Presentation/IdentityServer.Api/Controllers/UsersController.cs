@@ -1,8 +1,9 @@
 ﻿namespace IdentityServer.Api.Controllers;
 
-[Route("api/users/[action]")]
 [ApiController]
+[ApiVersion("1.0")]
 [Authorize(LocalApi.PolicyName)]
+[Route("api/v{version:apiVersion}/users/[action]")]
 public class UsersController : BaseController
 {
     public UsersController(IMediator mediator) : base(mediator)
