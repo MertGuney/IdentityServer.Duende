@@ -13,6 +13,7 @@ global using IdentityServer.Application.Features.Commands.Users.ChangeEmail;
 global using IdentityServer.Application.Features.Commands.Users.ChangePassword;
 global using IdentityServer.Application.Features.Queries.Users.GetCurrentUser;
 global using IdentityServer.Domain.Entities;
+global using IdentityServer.Domain.Options;
 global using IdentityServer.Infrastructure;
 global using IdentityServer.Persistence;
 global using IdentityServer.Persistence.SeedData;

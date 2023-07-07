@@ -22,24 +22,26 @@ builder.Services.AddInfrastructureLayer(builder.Configuration, builder.Environme
 
 var authenticationBuilder = builder.Services.AddAuthentication();
 
+var authOptions = builder.Configuration.GetSection("Authentication").Get<AuthOptions>();
+
 authenticationBuilder.AddGoogle("Google", opts =>
 {
-    opts.ClientId = "790647006486-n4666sbm1i13n56smle2b4niassfp7gm.apps.googleusercontent.com";
-    opts.ClientSecret = "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";
+    opts.ClientId = authOptions.Google.ClientId;
+    opts.ClientSecret = authOptions.Google.ClientSecret;
     opts.SignInScheme = IdentityConstants.ExternalScheme;
     opts.Scope.Add(JwtClaimTypes.Profile);
 });
-//authenticationBuilder.AddTwitter(opts =>
-//{
-//    opts.ConsumerKey = "";
-//    opts.ConsumerSecret = "";
-//});
-//authenticationBuilder.AddFacebook(opts =>
-//{
-//    opts.ClientId = "";
-//    opts.ClientSecret = "";
-//    opts.Fields.Add(JwtClaimTypes.Picture);
-//});
+authenticationBuilder.AddTwitter(opts =>
+{
+    opts.ConsumerKey = authOptions.Twitter.ClientId;
+    opts.ConsumerSecret = authOptions.Twitter.ClientSecret;
+});
+authenticationBuilder.AddFacebook(opts =>
+{
+    opts.ClientId = authOptions.Facebook.ClientId;
+    opts.ClientSecret = authOptions.Facebook.ClientSecret;
+    opts.Fields.Add(JwtClaimTypes.Picture);
+});
 
 builder.Services.AddApiVersioning(options =>
 {
