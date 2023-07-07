@@ -17,10 +17,6 @@ public class CodesController : BaseController
         => ActionResultInstance(await _mediator.Send(request));
 
     [HttpPost]
-    public async Task<IActionResult> SendChangePasswordCode(SendChangePasswordCodeCommandRequest request)
-        => ActionResultInstance(await _mediator.Send(request));
-
-    [HttpPost]
     public async Task<IActionResult> SendForgotPasswordCode(SendForgotPasswordCodeCommandRequest request)
         => ActionResultInstance(await _mediator.Send(request));
 }

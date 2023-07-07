@@ -4,6 +4,5 @@ public enum CodeTypeEnum
 {
     Register = 1,
     ChangeEmail,
-    ChangePassword,
     ForgotPassword,
 }

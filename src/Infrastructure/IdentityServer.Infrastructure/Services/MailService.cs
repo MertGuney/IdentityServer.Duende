@@ -41,27 +41,6 @@ public class MailService : IMailService
         }
     }
 
-    public async Task<bool> SendAsync(string to, Guid userId, string code, CodeTypeEnum codeType)
-    {
-        bool result = false;
-        switch (codeType)
-        {
-            case CodeTypeEnum.Register:
-                result = await SendEmailConfirmationMailAsync(to, userId, code);
-                break;
-            case CodeTypeEnum.ChangeEmail:
-                result = await SendChangeEmailConfirmationMailAsync(to, userId, code);
-                break;
-            case CodeTypeEnum.ChangePassword:
-                result = await SendChangePasswordMailAsync(to, userId, code);
-                break;
-            case CodeTypeEnum.ForgotPassword:
-                result = await SendForgotPasswordMailAsync(to, userId, code);
-                break;
-        }
-        return result;
-    }
-
     public async Task<bool> SendEmailConfirmationMailAsync(string to, Guid userId, string code)
     {
         return await SendAsync(to, "Email Confirmation", $"{userId}/{code}");

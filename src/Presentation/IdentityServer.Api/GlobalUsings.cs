@@ -2,7 +2,6 @@
 global using IdentityServer.Application;
 global using IdentityServer.Application.Common.Extensions;
 global using IdentityServer.Application.Features.Commands.Auth.Codes.SendChangeEmailCode;
-global using IdentityServer.Application.Features.Commands.Auth.Codes.SendChangePasswordCode;
 global using IdentityServer.Application.Features.Commands.Auth.Codes.SendForgotPasswordCode;
 global using IdentityServer.Application.Features.Commands.Auth.Codes.SendRegisterCode;
 global using IdentityServer.Application.Features.Commands.Auth.Register;
