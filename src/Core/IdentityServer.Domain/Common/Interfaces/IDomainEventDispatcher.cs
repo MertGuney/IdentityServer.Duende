@@ -1,9 +1,6 @@
-﻿using IdentityServer.Domain.Common;
+﻿namespace IdentityServer.Domain.Common.Interfaces;
 
-namespace IdentityServer.Domain.Common.Interfaces
+public interface IDomainEventDispatcher
 {
-    public interface IDomainEventDispatcher
-    {
-        Task DispatchAndClearEvents(IEnumerable<BaseEntity> entitiesWithEvents);
-    }
+    Task DispatchAndClearEvents(IEnumerable<BaseEntity> entitiesWithEvents);
 }

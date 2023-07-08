@@ -12,12 +12,12 @@ public class AspNetUserCode : BaseAuditableEntity
 
     public AspNetUserCode() { }
 
-    public AspNetUserCode(string value, Guid userId, CodeTypeEnum type)
+    public AspNetUserCode(string value, Guid userId, CodeTypeEnum type, int second = 200)
     {
         Type = type;
         Value = value;
         UserId = userId;
         IsVerified = false;
-        ExpireTime = DateTime.UtcNow.AddSeconds(200);
+        ExpireTime = DateTime.UtcNow.AddSeconds(second);
     }
 }
