@@ -3,7 +3,6 @@
 public class AspNetUserCode : BaseAuditableEntity
 {
     public string Value { get; set; }
-    public bool IsVerified { get; set; }
     public CodeTypeEnum Type { get; set; }
     public DateTime ExpireTime { get; set; }
 
@@ -17,7 +16,6 @@ public class AspNetUserCode : BaseAuditableEntity
         Type = type;
         Value = value;
         UserId = userId;
-        IsVerified = false;
         ExpireTime = DateTime.UtcNow.AddSeconds(second);
     }
 }

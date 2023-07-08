@@ -12,6 +12,10 @@ public static class Seed
             });
             await roleManager.CreateAsync(new Role()
             {
+                Name = "Manager"
+            });
+            await roleManager.CreateAsync(new Role()
+            {
                 Name = "Customer"
             });
         }
