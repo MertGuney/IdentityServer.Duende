@@ -29,4 +29,8 @@
     <ProjectReference Include="..\..\Infrastructure\IdentityServer.Persistence\IdentityServer.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
