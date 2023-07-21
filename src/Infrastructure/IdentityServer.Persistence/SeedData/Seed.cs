@@ -1,4 +1,6 @@
-﻿namespace IdentityServer.Persistence.SeedData;
+﻿using IdentityServer.Application.Common.Constants;
+
+namespace IdentityServer.Persistence.SeedData;
 
 public static class Seed
 {
@@ -8,15 +10,15 @@ public static class Seed
         {
             await roleManager.CreateAsync(new Role()
             {
-                Name = "Administrator"
+                Name = RoleConstants.Customer
             });
             await roleManager.CreateAsync(new Role()
             {
-                Name = "Manager"
+                Name = RoleConstants.Manager
             });
             await roleManager.CreateAsync(new Role()
             {
-                Name = "Customer"
+                Name = RoleConstants.Administrator
             });
         }
     }
@@ -32,8 +34,8 @@ public static class Seed
                 PhoneNumber = "905555555555",
             };
             await userManager.CreateAsync(user, "Password*-1");
-            await userManager.AddToRoleAsync(user, "Customer");
-            await userManager.AddToRoleAsync(user, "Administrator");
+            await userManager.AddToRoleAsync(user, RoleConstants.Customer);
+            await userManager.AddToRoleAsync(user, RoleConstants.Administrator);
         }
     }
 
