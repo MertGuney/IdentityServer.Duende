@@ -1,4 +1,6 @@
-﻿namespace IdentityServer.Application.Features.Commands.Auth.Register;
+﻿using IdentityServer.Application.Common.Constants;
+
+namespace IdentityServer.Application.Features.Commands.Auth.Register;
 public class RegisterCommandHandler : IRequestHandler<RegisterCommandRequest, ResponseModel<NoContentModel>>
 {
     private readonly IUserService _userService;
@@ -20,7 +22,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommandRequest, Re
         var createResponse = await _userService.CreateAsync(user, request.Password);
         if (!createResponse.IsSuccessful) return createResponse;
 
-        var addUserToRoleResponse = await _userService.AddToRoleAsync(user, "Customer");
+        var addUserToRoleResponse = await _userService.AddToRoleAsync(user, RoleConstants.Customer);
         if (!addUserToRoleResponse.IsSuccessful) return addUserToRoleResponse;
 
         var code = await _codeService.GenerateAsync(user.Id, CodeTypeEnum.Register, cancellationToken);

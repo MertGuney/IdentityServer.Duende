@@ -1,6 +1,5 @@
-﻿namespace IdentityServer.Domain.Entities
+﻿namespace IdentityServer.Domain.Entities;
+
+public class Role : IdentityRole<Guid>
 {
-    public class Role : IdentityRole<Guid>
-    {
-    }
 }

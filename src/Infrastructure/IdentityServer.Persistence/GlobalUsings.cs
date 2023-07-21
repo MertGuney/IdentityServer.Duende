@@ -1,6 +1,4 @@
-﻿// Global using directives
-
-global using IdentityServer.Application.Repositories;
+﻿global using IdentityServer.Application.Repositories;
 global using IdentityServer.Application.Services.Abstractions;
 global using IdentityServer.Domain.Common;
 global using IdentityServer.Domain.Common.Interfaces;
