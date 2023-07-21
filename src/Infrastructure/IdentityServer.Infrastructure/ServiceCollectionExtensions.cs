@@ -78,11 +78,11 @@ public static class ServiceCollectionExtensions
             {
                 opts.ConfigureDbContext = b => b.UseNpgsql(configuration.GetConnectionString("DefaultConnection"), sql => sql.MigrationsAssembly(migrationsAssembly));
             })
-            .AddProfileService<IdentityProfileService>()
             .AddAspNetIdentity<User>();
 
-        identityBuilder.AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
+        identityBuilder.AddProfileService<IdentityProfileService>();
         identityBuilder.AddExtensionGrantValidator<TokenExchangeExtensionGrantValidator>();
+        identityBuilder.AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
 
         var rsa = new RSAKeyService(webHostEnvironment, TimeSpan.FromDays(30));
 
