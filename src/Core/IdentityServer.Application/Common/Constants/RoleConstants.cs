@@ -1,6 +1,6 @@
 ﻿namespace IdentityServer.Application.Common.Constants;
 
-public class RoleContants
+public class RoleConstants
 {
     public const string Manager = "Manager";
     public const string Customer = "Customer";

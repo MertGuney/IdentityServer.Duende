@@ -1,4 +1,6 @@
-﻿namespace IdentityServer.Shared.Models;
+﻿using IdentityServer.Shared.Constants;
+
+namespace IdentityServer.Shared.Models;
 public class ResponseModel<T>
 {
     public T Data { get; set; }
@@ -80,7 +82,7 @@ public class ResponseModel<T>
     {
         List<ErrorModel> errors = new()
             {
-                new ErrorModel(1,"Invalid user","User not found")
+                new ErrorModel(FailureConstants.UserNotFound, "Invalid user", "User not found")
             };
         return new ResponseModel<T> { Errors = errors, StatusCode = 404, IsSuccessful = false };
     }
@@ -89,7 +91,7 @@ public class ResponseModel<T>
     {
         List<ErrorModel> errors = new()
             {
-                new ErrorModel(1, "FailedToSendEmail", "An error occurred while sending the email confirmation mail")
+                new ErrorModel(FailureConstants.SendEmail, "FailedToSendEmail", "An error occurred while sending the email confirmation mail")
             };
         return new ResponseModel<T> { Errors = errors, StatusCode = 500, IsSuccessful = false };
     }
