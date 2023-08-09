@@ -13,17 +13,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{48CA97D9-BE05-40B3-986B-B27B116AF21D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Domain", "src\Core\IdentityServer.Domain\IdentityServer.Domain.csproj", "{300EE895-7902-48CE-8BE3-22D492F912FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Domain", "src\Core\IdentityServer.Domain\IdentityServer.Domain.csproj", "{300EE895-7902-48CE-8BE3-22D492F912FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Application", "src\Core\IdentityServer.Application\IdentityServer.Application.csproj", "{ED9D793C-A2C1-46AA-AEA9-DC69CAB8FB8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Application", "src\Core\IdentityServer.Application\IdentityServer.Application.csproj", "{ED9D793C-A2C1-46AA-AEA9-DC69CAB8FB8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Infrastructure", "src\Infrastructure\IdentityServer.Infrastructure\IdentityServer.Infrastructure.csproj", "{12F52730-6DFD-4838-BDCC-31FE35C0BEAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Infrastructure", "src\Infrastructure\IdentityServer.Infrastructure\IdentityServer.Infrastructure.csproj", "{12F52730-6DFD-4838-BDCC-31FE35C0BEAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Persistence", "src\Infrastructure\IdentityServer.Persistence\IdentityServer.Persistence.csproj", "{6758AAE1-29C6-4583-A051-FE6ACD32720B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Persistence", "src\Infrastructure\IdentityServer.Persistence\IdentityServer.Persistence.csproj", "{6758AAE1-29C6-4583-A051-FE6ACD32720B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Api", "src\Presentation\IdentityServer.Api\IdentityServer.Api.csproj", "{A44D16E7-DEEB-431D-8813-2DA6E2D3F2A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Api", "src\Presentation\IdentityServer.Api\IdentityServer.Api.csproj", "{A44D16E7-DEEB-431D-8813-2DA6E2D3F2A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Shared", "src\Shared\IdentityServer.Shared\IdentityServer.Shared.csproj", "{852EF05B-EEDA-4536-AC98-C46D47394BF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Shared", "src\Shared\IdentityServer.Shared\IdentityServer.Shared.csproj", "{852EF05B-EEDA-4536-AC98-C46D47394BF3}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EE17A3E4-0F01-4F61-9FAC-E318B1E0EB52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{852EF05B-EEDA-4536-AC98-C46D47394BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{852EF05B-EEDA-4536-AC98-C46D47394BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{852EF05B-EEDA-4536-AC98-C46D47394BF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE17A3E4-0F01-4F61-9FAC-E318B1E0EB52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE17A3E4-0F01-4F61-9FAC-E318B1E0EB52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE17A3E4-0F01-4F61-9FAC-E318B1E0EB52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE17A3E4-0F01-4F61-9FAC-E318B1E0EB52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

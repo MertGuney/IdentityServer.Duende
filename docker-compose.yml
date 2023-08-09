@@ -1,13 +1,13 @@
-version: "3.8"
+version: '3.4'
 
 services:
-  db:
-    image: postgres
-  api:
-    image: mertguney/identityserver
+  identityserver.api:
+    image: ${DOCKER_REGISTRY-}identityserverapi
     build:
       context: .
       dockerfile: src/Presentation/IdentityServer.Api/Dockerfile
+  identityserver.db:
+    image: postgres
 
 volumes:
-  identitydb_volume:
+  identityserverdb_volume:
