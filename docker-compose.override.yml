@@ -2,24 +2,20 @@ version: '3.4'
 
 services:
   identityserver.api:
-    container_name: identityserver.api
+    container_name: identityserver-api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ConnectionStrings:DefaultConnection=User ID=postgres;Password=Password*-1;Host=db;Port=5432;Database=IdentityServerDb;Integrated Security=true;Pooling=true;
     ports:
-      - "80"
-      - "443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - "5100:80"
+      - "7100:443"
   identityserver.db:
-    container_name: identityserver.db
+    container_name: identityserver-db
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=IdentityServerDb
-      - POSTGRES_PASSWORD=Password*-1 
+      - POSTGRES_PASSWORD=Password*-1
     ports:
       - 5432:5432
     volumes:
-      - identityserverdb_volume:var/lib/postgresql/data
+      - identityserverdb_volume:/var/lib/postgresql/data
