@@ -1,14 +1,19 @@
-﻿namespace IdentityServer.Shared.Models;
+﻿using IdentityServer.Shared.Enums;
+
+namespace IdentityServer.Shared.Models;
+
 public class ErrorModel
 {
     public int Code { get; set; }
+    public string Type { get; set; }
     public string Message { get; set; }
-    public string Description { get; set; }
+    public string TransactionId { get; set; }
 
-    public ErrorModel(int code, string message, string description)
+    public ErrorModel(FailureTypes code, string message, string transactionId)
     {
-        Code = code;
+        Code = (int)code;
         Message = message;
-        Description = description;
+        Type = Enum.GetName(code);
+        TransactionId = transactionId;
     }
 }

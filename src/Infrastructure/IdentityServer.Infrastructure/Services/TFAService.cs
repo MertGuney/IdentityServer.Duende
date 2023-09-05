@@ -1,4 +1,6 @@
-﻿namespace IdentityServer.Infrastructure.Services;
+﻿using IdentityServer.Shared.Enums;
+
+namespace IdentityServer.Infrastructure.Services;
 
 public class TFAService : ITFAService
 {
@@ -34,7 +36,7 @@ public class TFAService : ITFAService
             List<ErrorModel> errors = new();
             foreach (var error in result.Errors)
             {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                errors.Add(new ErrorModel(FailureTypes.ENABLE_TFA_KEY_FAILED, error.Description, Guid.NewGuid().ToString()));
                 _logger.LogWarning($"An error occurred while enabling two-factor authentication . User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
@@ -50,7 +52,7 @@ public class TFAService : ITFAService
             List<ErrorModel> errors = new();
             foreach (var error in result.Errors)
             {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                errors.Add(new ErrorModel(FailureTypes.RESET_TFA_KEY_FAILED, error.Description, Guid.NewGuid().ToString()));
                 _logger.LogWarning($"An error occurred while reseting two-factor authenticator key. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);

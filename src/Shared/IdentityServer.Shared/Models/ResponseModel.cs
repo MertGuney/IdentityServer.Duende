@@ -1,4 +1,4 @@
-﻿using IdentityServer.Shared.Constants;
+﻿using IdentityServer.Shared.Enums;
 
 namespace IdentityServer.Shared.Models;
 public class ResponseModel<T>
@@ -59,6 +59,7 @@ public class ResponseModel<T>
     #region Failures
 
     #region Sync
+
     public static ResponseModel<T> Failure(List<ErrorModel> errors, int statusCode)
     {
         return new ResponseModel<T> { Errors = errors, StatusCode = statusCode, IsSuccessful = false };
@@ -69,20 +70,20 @@ public class ResponseModel<T>
         return new ResponseModel<T> { Errors = new List<ErrorModel>() { error }, StatusCode = statusCode, IsSuccessful = false };
     }
 
-    public static ResponseModel<T> Failure(int code, string message, string description, int statusCode)
+    public static ResponseModel<T> Failure(FailureTypes code, string message, string transactionId, int statusCode)
     {
         List<ErrorModel> errors = new()
             {
-                new ErrorModel(code, message, description)
+                new ErrorModel(code, message, transactionId)
             };
         return new ResponseModel<T> { Errors = errors, StatusCode = statusCode, IsSuccessful = false };
     }
-    //TODO: Wrong error code
+
     public static ResponseModel<T> UserNotFound()
     {
         List<ErrorModel> errors = new()
             {
-                new ErrorModel(FailureConstants.UserNotFound, "Invalid user", "User not found")
+                new ErrorModel(FailureTypes.USER_NOT_FOUND, "User not found", Guid.NewGuid().ToString())
             };
         return new ResponseModel<T> { Errors = errors, StatusCode = 404, IsSuccessful = false };
     }
@@ -91,10 +92,11 @@ public class ResponseModel<T>
     {
         List<ErrorModel> errors = new()
             {
-                new ErrorModel(FailureConstants.SendEmail, "FailedToSendEmail", "An error occurred while sending the email confirmation mail")
+                new ErrorModel(FailureTypes.MAIL_EXCEPTION, "An error occurred while sending the email confirmation mail", Guid.NewGuid().ToString())
             };
         return new ResponseModel<T> { Errors = errors, StatusCode = 500, IsSuccessful = false };
     }
+
     #endregion
 
     #region Async
@@ -108,10 +110,11 @@ public class ResponseModel<T>
         return Task.FromResult(Failure(error, statusCode));
     }
 
-    public static Task<ResponseModel<T>> FailureAsync(int code, string message, string description, int statusCode)
+    public static Task<ResponseModel<T>> FailureAsync(FailureTypes code, string message, string transactionId, int statusCode)
     {
-        return Task.FromResult(Failure(code, message, description, statusCode));
+        return Task.FromResult(Failure(code, message, transactionId, statusCode));
     }
+
     #endregion
 
     #endregion

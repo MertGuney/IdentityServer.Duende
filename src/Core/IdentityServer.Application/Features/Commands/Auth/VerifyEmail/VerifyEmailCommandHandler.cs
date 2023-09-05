@@ -18,9 +18,11 @@ public class VerifyEmailCommandHandler : IRequestHandler<VerifyEmailCommandReque
 
         bool isVerifiedCode = await _codeService.VerifyAsync(user.Id, request.Code, CodeTypeEnum.Register, cancellationToken);
         if (!isVerifiedCode)
-            return await ResponseModel<NoContentModel>.FailureAsync(1,
-                "UnverifiedCode",
+            return await ResponseModel<NoContentModel>
+                .FailureAsync(
+                FailureTypes.UNVERIFIED_CODE,
                 "Code unverified.",
+                Guid.NewGuid().ToString(),
                 StatusCodes.Status400BadRequest);
 
         return await _userService.VerifyEmailAsync(user);

@@ -19,9 +19,11 @@ public class EnableTFACommandHandler : IRequestHandler<EnableTFACommandRequest, 
 
         var isTFAEnabled = await _tfaService.IsEnabledAsync(user);
         if (isTFAEnabled)
-            return await ResponseModel<EnableTFACommandResponse>.FailureAsync(1,
-                "TFAEnabled",
+            return await ResponseModel<EnableTFACommandResponse>
+                .FailureAsync(
+                FailureTypes.TFA_ALREADY_ENABLED,
                 "Two factor authentication is already enabled on this account",
+                Guid.NewGuid().ToString(),
                 StatusCodes.Status400BadRequest);
 
         var authenticatorKey = await _tfaService.GetAuthenticatorKeyAsync(user);

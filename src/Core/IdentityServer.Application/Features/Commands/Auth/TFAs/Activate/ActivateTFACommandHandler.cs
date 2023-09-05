@@ -17,9 +17,11 @@ public class ActivateTFACommandHandler : IRequestHandler<ActivateTFACommandReque
 
         var isValidCode = await _tfaService.VerifyTwoFactorAuthCodeAsync(user, request.Code);
         if (!isValidCode)
-            return await ResponseModel<NoContentModel>.FailureAsync(1,
-                "InvalidCode",
+            return await ResponseModel<NoContentModel>
+                .FailureAsync(
+                FailureTypes.INVALID_CODE,
                 "Invalid Authentication Code",
+                Guid.NewGuid().ToString(),
                 StatusCodes.Status400BadRequest);
 
         return await _tfaService.SetTwoFactorEnabledAsync(user, true);

@@ -1,8 +1,8 @@
 ﻿namespace IdentityServer.Application.Common.Extensions;
 public class ExceptionHandlingMiddleware : IMiddleware
 {
-    private const int ErrorCode = 2000;
     private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+
     public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger)
     {
         _logger = logger;
@@ -56,7 +56,7 @@ public class ExceptionHandlingMiddleware : IMiddleware
     {
         List<ErrorModel> errors = new()
             {
-                new ErrorModel(ErrorCode, GetTitle(exception), exception.Message)
+                new ErrorModel(FailureTypes.APPLICATION_EXCEPTION, exception.Message, Guid.NewGuid().ToString())
             };
         return errors;
     }

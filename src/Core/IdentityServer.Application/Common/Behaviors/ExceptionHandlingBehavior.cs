@@ -1,4 +1,5 @@
 ﻿namespace IdentityServer.Application.Common.Behaviors;
+
 public class ExceptionHandlingBehavior<TRequest, TResponse, TException> : IRequestExceptionHandler<TRequest, TResponse, TException>
     where TRequest : IRequest<TResponse>
     where TResponse : ResponseModel<TResponse>
@@ -29,6 +30,8 @@ public class ExceptionHandlingBehavior<TRequest, TResponse, TException> : IReque
         var innerException = exception.InnerException?.Message;
         var stackTrace = exception.StackTrace;
 
-        return new ErrorModel(1, message, $"Method Name: {methodName}, Inner Exception: {innerException}, Stack Trace: {stackTrace}");
+        return new ErrorModel(FailureTypes.APPLICATION_EXCEPTION,
+            $"Message: {message}, Method Name: {methodName}, Inner Exception: {innerException}, Stack Trace: {stackTrace}",
+            Guid.NewGuid().ToString());
     }
 }

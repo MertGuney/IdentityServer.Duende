@@ -1,4 +1,3 @@
 ﻿namespace IdentityServer.Shared.Models;
-public class NoContentModel
-{
-}
+
+public record NoContentModel;

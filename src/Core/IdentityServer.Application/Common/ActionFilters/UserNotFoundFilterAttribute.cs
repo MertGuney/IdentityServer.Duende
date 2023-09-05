@@ -10,7 +10,7 @@ public class UserNotFoundFilterAttribute : IAsyncActionFilter
         _userManager = userManager;
         _currentUserService = currentUserService;
     }
-    //TODO: Wrong error code
+
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         if (!string.IsNullOrWhiteSpace(_currentUserService.UserId))
@@ -28,8 +28,7 @@ public class UserNotFoundFilterAttribute : IAsyncActionFilter
         }
         else
         {
-            context.Result = new BadRequestObjectResult(ResponseModel<NoContentModel>.Failure(1,
-                "Null sub value", "Sub value could not be null", StatusCodes.Status400BadRequest));
+            context.Result = new BadRequestObjectResult(ResponseModel<NoContentModel>.UserNotFound());
         }
     }
 }

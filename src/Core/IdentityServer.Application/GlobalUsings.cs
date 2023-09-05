@@ -12,6 +12,7 @@ global using IdentityServer.Application.Services.Abstractions;
 global using IdentityServer.Application.Services.Concretes;
 global using IdentityServer.Domain.Entities;
 global using IdentityServer.Domain.Enums;
+global using IdentityServer.Shared.Enums;
 global using IdentityServer.Shared.Models;
 global using MediatR;
 global using MediatR.Pipeline;

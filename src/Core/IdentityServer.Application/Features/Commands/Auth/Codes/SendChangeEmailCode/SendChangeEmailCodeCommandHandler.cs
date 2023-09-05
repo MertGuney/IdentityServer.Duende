@@ -20,9 +20,9 @@ public class SendChangeEmailCodeCommandHandler : IRequestHandler<SendChangeEmail
         var isExistEmail = await _userService.GetByEmailAsync(request.NewEmail);
         if (isExistEmail is not null)
         {
-            return await ResponseModel<NoContentModel>.FailureAsync(1,
-                "Registered email address.",
+            return await ResponseModel<NoContentModel>.FailureAsync(FailureTypes.REGISTERED_USER,
                 "This mail address is registered.",
+                Guid.NewGuid().ToString(),
                 StatusCodes.Status400BadRequest);
         }
 

@@ -18,9 +18,11 @@ public class ChangeEmailCommandHandler : IRequestHandler<ChangeEmailCommandReque
         var user = await _userService.GetAsync();
 
         var isCodeVerified = await _codeService.VerifyAsync(user.Id, request.Code, CodeTypeEnum.ChangeEmail, cancellationToken);
-        if (!isCodeVerified) return await ResponseModel<NoContentModel>.FailureAsync(1,
-            "Unverified code",
+        if (!isCodeVerified) return await ResponseModel<NoContentModel>
+                .FailureAsync(
+            FailureTypes.UNVERIFIED_CODE,
             "Code unverified",
+            Guid.NewGuid().ToString(),
             StatusCodes.Status400BadRequest);
 
         var changeEmailResponse = await _authService.ChangeEmailAsync(user, request.NewEmail);

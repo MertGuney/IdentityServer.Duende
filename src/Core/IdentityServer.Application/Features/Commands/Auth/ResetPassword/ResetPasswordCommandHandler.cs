@@ -20,7 +20,12 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommandR
 
         var isVerifiedCode = await _codeService.VerifyAsync(user.Id, request.Code, CodeTypeEnum.ForgotPassword, cancellationToken);
         if (!isVerifiedCode)
-            return await ResponseModel<NoContentModel>.FailureAsync(1, "UnverifiedCode", "Code unverified.", StatusCodes.Status400BadRequest);
+            return await ResponseModel<NoContentModel>
+                .FailureAsync(
+                FailureTypes.UNVERIFIED_CODE,
+                "Code unverified.",
+                Guid.NewGuid().ToString(),
+                StatusCodes.Status400BadRequest);
 
         var resetPasswordResult = await _authService.ResetPasswordAsync(user, request.NewPassword);
         if (!resetPasswordResult.IsSuccessful) return resetPasswordResult;

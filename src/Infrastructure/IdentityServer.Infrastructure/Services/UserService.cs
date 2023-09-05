@@ -1,4 +1,6 @@
-﻿namespace IdentityServer.Infrastructure.Services;
+﻿using IdentityServer.Shared.Enums;
+
+namespace IdentityServer.Infrastructure.Services;
 
 public class UserService : IUserService
 {
@@ -38,7 +40,7 @@ public class UserService : IUserService
             List<ErrorModel> errors = new();
             foreach (var error in result.Errors)
             {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                errors.Add(new ErrorModel(FailureTypes.VERIFY_EMAIL_FAILED, error.Description, Guid.NewGuid().ToString()));
                 _logger.LogWarning($"An error occurred while updating to the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
@@ -54,7 +56,7 @@ public class UserService : IUserService
             List<ErrorModel> errors = new();
             foreach (var error in result.Errors)
             {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                errors.Add(new ErrorModel(FailureTypes.UPDATE_USER_FAILED, error.Description, Guid.NewGuid().ToString()));
                 _logger.LogWarning($"An error occurred while updating to the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
@@ -71,7 +73,7 @@ public class UserService : IUserService
             List<ErrorModel> errors = new();
             foreach (var error in result.Errors)
             {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                errors.Add(new ErrorModel(FailureTypes.CREATE_USER_FAILED, error.Description, Guid.NewGuid().ToString()));
                 _logger.LogWarning($"An error occurred while creating the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
@@ -88,7 +90,7 @@ public class UserService : IUserService
             List<ErrorModel> errors = new();
             foreach (var error in result.Errors)
             {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                errors.Add(new ErrorModel(FailureTypes.CREATE_EXTERNAL_LOGIN_FAILED, error.Description, Guid.NewGuid().ToString()));
                 _logger.LogWarning($"An error occurred while creating the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
@@ -104,7 +106,7 @@ public class UserService : IUserService
             List<ErrorModel> errors = new();
             foreach (var error in result.Errors)
             {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                errors.Add(new ErrorModel(FailureTypes.ADD_ROLE_TO_USER_FAILED, error.Description, Guid.NewGuid().ToString()));
                 _logger.LogWarning($"An error occurred while adding the role to the user. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);

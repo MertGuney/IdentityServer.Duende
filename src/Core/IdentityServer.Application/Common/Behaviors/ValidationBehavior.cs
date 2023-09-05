@@ -10,7 +10,7 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
     {
         _validators = validators;
     }
-    //TODO: Wrong error code
+
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         if (!_validators.Any())
@@ -29,7 +29,7 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
             return await next.Invoke();
         }
 
-        var errors = failures.Select(f => new ErrorModel(1, f.PropertyName, f.ErrorMessage)).ToList();
+        var errors = failures.Select(f => new ErrorModel(FailureTypes.VALIDATION_EXCEPTION, f.ErrorMessage, Guid.NewGuid().ToString())).ToList();
 
         var response = await ResponseModel<TResponse>.FailureAsync(errors, StatusCodes.Status422UnprocessableEntity);
 

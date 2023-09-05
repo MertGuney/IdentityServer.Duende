@@ -1,4 +1,6 @@
-﻿namespace IdentityServer.Infrastructure.Services;
+﻿using IdentityServer.Shared.Enums;
+
+namespace IdentityServer.Infrastructure.Services;
 
 public class AuthService : IAuthService
 {
@@ -14,7 +16,12 @@ public class AuthService : IAuthService
     public async Task<ResponseModel<NoContentModel>> ChangePasswordAsync(User user, string currentPassword, string newPassword)
     {
         var isExistPassword = await _userManager.CheckPasswordAsync(user, currentPassword);
-        if (!isExistPassword) return await ResponseModel<NoContentModel>.FailureAsync(1, "CurrentPasswordNotMatch", "Current password does not match", StatusCodes.Status404NotFound);
+        if (!isExistPassword) return await ResponseModel<NoContentModel>
+                .FailureAsync(
+            FailureTypes.CURRENT_PASSWORD_DID_NOT_MATCH,
+            "Current password does not match",
+            Guid.NewGuid().ToString(),
+            StatusCodes.Status404NotFound);
 
         IdentityResult changePasswordResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
         if (!changePasswordResult.Succeeded)
@@ -22,7 +29,7 @@ public class AuthService : IAuthService
             List<ErrorModel> errors = new();
             foreach (var error in changePasswordResult.Errors)
             {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                errors.Add(new ErrorModel(FailureTypes.CHANGE_PASSWORD_FAILED, error.Description, Guid.NewGuid().ToString()));
                 _logger.LogWarning($"An error occurred while changing the password. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
@@ -40,7 +47,7 @@ public class AuthService : IAuthService
             List<ErrorModel> errors = new();
             foreach (var error in changeEmailResult.Errors)
             {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                errors.Add(new ErrorModel(FailureTypes.CONFIRM_EMAIL_FAILED, error.Description, Guid.NewGuid().ToString()));
                 _logger.LogWarning($"An error occurred while changing the password. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
@@ -58,7 +65,7 @@ public class AuthService : IAuthService
             List<ErrorModel> errors = new();
             foreach (var error in result.Errors)
             {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                errors.Add(new ErrorModel(FailureTypes.CONFIRM_EMAIL_FAILED, error.Description, Guid.NewGuid().ToString()));
                 _logger.LogWarning($"An error occurred while changing the password. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
@@ -75,7 +82,7 @@ public class AuthService : IAuthService
             List<ErrorModel> errors = new();
             foreach (var error in resetPasswordResult.Errors)
             {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                errors.Add(new ErrorModel(FailureTypes.RESET_PASSWORD_FAILED, error.Description, Guid.NewGuid().ToString()));
                 _logger.LogWarning($"An error occurred while resetting the password. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
@@ -91,7 +98,7 @@ public class AuthService : IAuthService
             List<ErrorModel> errors = new();
             foreach (var error in securityStampResult.Errors)
             {
-                errors.Add(new ErrorModel(1, error.Code, error.Description));
+                errors.Add(new ErrorModel(FailureTypes.UPDATE_SECURITY_STAMP_FAILED, error.Description, Guid.NewGuid().ToString()));
                 _logger.LogWarning($"An error occurred while the security updateding. User: {user.Email} Code: {error.Code} Message: {error.Description}");
             }
             return await ResponseModel<NoContentModel>.FailureAsync(errors, StatusCodes.Status400BadRequest);
