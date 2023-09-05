@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.Api.Controllers;
+﻿namespace IdentityServer.Api.Controllers.v1;
 
 [ApiController]
 [ApiVersion("1.0")]

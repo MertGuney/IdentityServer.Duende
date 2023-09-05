@@ -2,23 +2,15 @@ var corsPolicyName = "IdentityServerCorsPolicy";
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(corsPolicyName,
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:3000")
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
-        });
-});
+builder.Services.ConfigureCors(corsPolicyName);
 
 builder.Services.AddApplicationLayer();
 
 builder.Services.AddPersistenceLayer(builder.Configuration);
 
 builder.Services.AddInfrastructureLayer(builder.Configuration, builder.Environment);
+
+builder.Services.ConfigureVersioning();
 
 var authenticationBuilder = builder.Services.AddAuthentication();
 
@@ -58,7 +50,7 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.ConfigureSwagger();
 
 var app = builder.Build();
 

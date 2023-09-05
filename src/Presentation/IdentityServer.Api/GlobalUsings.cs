@@ -1,4 +1,5 @@
 ﻿global using IdentityModel;
+global using IdentityServer.Api.Extensions;
 global using IdentityServer.Application;
 global using IdentityServer.Application.Common.Extensions;
 global using IdentityServer.Application.Features.Commands.Auth.Codes.SendChangeEmailCode;
@@ -19,8 +20,10 @@ global using IdentityServer.Persistence;
 global using IdentityServer.Persistence.SeedData;
 global using IdentityServer.Shared.Models;
 global using MediatR;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Versioning;
+global using Microsoft.OpenApi.Models;
 global using static Duende.IdentityServer.IdentityServerConstants;
