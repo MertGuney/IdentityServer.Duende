@@ -12,36 +12,7 @@ builder.Services.AddInfrastructureLayer(builder.Configuration, builder.Environme
 
 builder.Services.ConfigureVersioning();
 
-var authenticationBuilder = builder.Services.AddAuthentication();
-
-var authOptions = builder.Configuration.GetSection("Authentication").Get<AuthOptions>();
-
-authenticationBuilder.AddGoogle("Google", opts =>
-{
-    opts.ClientId = authOptions.Google.ClientId;
-    opts.ClientSecret = authOptions.Google.ClientSecret;
-    opts.SignInScheme = IdentityConstants.ExternalScheme;
-    opts.Scope.Add(JwtClaimTypes.Profile);
-});
-authenticationBuilder.AddTwitter(opts =>
-{
-    opts.ConsumerKey = authOptions.Twitter.ClientId;
-    opts.ConsumerSecret = authOptions.Twitter.ClientSecret;
-});
-authenticationBuilder.AddFacebook(opts =>
-{
-    opts.ClientId = authOptions.Facebook.ClientId;
-    opts.ClientSecret = authOptions.Facebook.ClientSecret;
-    opts.Fields.Add(JwtClaimTypes.Picture);
-});
-
-builder.Services.AddApiVersioning(options =>
-{
-    options.DefaultApiVersion = new ApiVersion(1, 0);
-    options.AssumeDefaultVersionWhenUnspecified = true;
-    options.ReportApiVersions = true;
-    options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader());
-});
+builder.Services.ConfigureExternalAuth(builder.Configuration);
 
 builder.Services.AddControllers()
     .ConfigureApiBehaviorOptions(opts =>

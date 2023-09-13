@@ -72,11 +72,15 @@ public static class ServiceCollectionExtensions
         })
             .AddConfigurationStore(opts =>
             {
-                opts.ConfigureDbContext = b => b.UseNpgsql(configuration.GetConnectionString("DefaultConnection"), sql => sql.MigrationsAssembly(migrationsAssembly));
+                opts.ConfigureDbContext =
+                    b => b.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
+                    sql => sql.MigrationsAssembly(migrationsAssembly));
             })
             .AddOperationalStore(opts =>
             {
-                opts.ConfigureDbContext = b => b.UseNpgsql(configuration.GetConnectionString("DefaultConnection"), sql => sql.MigrationsAssembly(migrationsAssembly));
+                opts.ConfigureDbContext =
+                b => b.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
+                sql => sql.MigrationsAssembly(migrationsAssembly));
             })
             .AddAspNetIdentity<User>();
 

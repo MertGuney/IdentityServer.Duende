@@ -42,7 +42,7 @@ public class RSAKeyService
             var p = GetRandomKey();
             RSAParametersWithPrivate t = new();
             t.SetParameters(p);
-            File.WriteAllText(_file, JsonConvert.SerializeObject(t, Formatting.Indented));
+            File.WriteAllText(_file, JsonSerializer.Serialize(t));
         }
         return this;
     }
@@ -50,7 +50,7 @@ public class RSAKeyService
     public RSAParameters GetKeyParameters()
     {
         if (!File.Exists(_file)) throw new FileNotFoundException("Check configuration - cannot find auth key file: " + _file);
-        var keyParams = JsonConvert.DeserializeObject<RSAParametersWithPrivate>(File.ReadAllText(_file));
+        var keyParams = JsonSerializer.Deserialize<RSAParametersWithPrivate>(File.ReadAllText(_file));
         return keyParams.ToRSAParameters();
     }
 

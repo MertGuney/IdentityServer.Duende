@@ -7,11 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Duende.IdentityServer" Version="6.3.3" />
-    <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.3.3" />
-    <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.3" />
-    <PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="6.3.3" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Duende.IdentityServer" Version="6.3.4" />
+    <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.3.4" />
+    <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.4" />
+    <PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="6.3.4" />
+    <PackageReference Include="Duende.IdentityServer.Storage" Version="6.3.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="7.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="7.0.11" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     <PackageReference Include="QRCoder" Version="1.4.3" />
   </ItemGroup>
